@@ -15,19 +15,19 @@ if (missing.length) {
 
 const app = express();
 const allowedOrigins = [
-  process.env.CLIENT_ORIGIN,
   'https://portfolio-nsxd-rho.vercel.app',
   'https://portfolio-nsxd-git-main-ekta-mishras-projects.vercel.app',
   'https://portfolio-nsxd-8sznm99un-ekta-mishras-projects.vercel.app',
   'http://localhost:5173'
-].filter(Boolean);
+];
 
 app.use(cors({
   origin(origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
-      return callback(null, true);
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS blocked origin: ${origin}`));
     }
-    return callback(new Error('Origin is not allowed by CORS.'));
   },
   credentials: true
 }));

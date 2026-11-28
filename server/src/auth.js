@@ -5,10 +5,12 @@ export const COOKIE_NAME = 'portfolio_admin';
 export const COOKIE_AGE = 4 * 60 * 60 * 1000;
 
 export function cookieOptions() {
+  const isProduction = process.env.NODE_ENV === 'production';
+
   return {
     httpOnly: true,
-    sameSite: 'strict',
-    secure: process.env.NODE_ENV === 'production',
+    sameSite: isProduction ? 'none' : 'strict',
+    secure: isProduction,
     maxAge: COOKIE_AGE,
     path: '/'
   };
