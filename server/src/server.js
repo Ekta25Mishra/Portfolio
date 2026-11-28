@@ -14,10 +14,13 @@ if (missing.length) {
 }
 
 const app = express();
-const clientOrigin = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
+const clientOrigin = process.env.CLIENT_ORIGIN || 
+'https://portfolio-nsxd-rho.vercel.app' || 
+'https://portfolio-nsxd-git-main-ekta-mishras-projects.vercel.app' ||
+'https://portfolio-nsxd-8sznm99un-ekta-mishras-projects.vercel.app' ||
+'http://localhost:5173' 
 
-app.disable('x-powered-by');
-app.use(helmet());
+
 app.use(cors({
   origin(origin, callback) {
     if (!origin || origin === clientOrigin) return callback(null, true);
@@ -25,6 +28,9 @@ app.use(cors({
   },
   credentials: true
 }));
+
+app.disable('x-powered-by');
+app.use(helmet());
 app.use(express.json({ limit: '32kb' }));
 app.use(cookieParser());
 app.get('/api/health', (_req, res) => res.json({ status: 'ok' }));
